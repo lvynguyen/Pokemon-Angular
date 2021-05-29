@@ -1,0 +1,25 @@
+<div>
+    <paginator
+      [currentPage]="paginatorState.page"
+      [rowsPerPageOptions]="pageSizes"
+      [rows]="paginatorState.rows"
+      [totalRecords]="paginatedPokemons?.count"
+      (onPageChange)="onPageChanged($event)"
+      style=""
+    ></paginator>
+    <input type="text" placeholder="Search pokemon by name" [formControl]="query">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+        </tr>
+        <ng-container *ngFor="let pokemon of displayPokemons">
+            <tr>
+                <td>{{pokemon.name}}</td>
+                <td>
+                    <img src="{{pokemon.image}}" alt="pokemon" width="100" height="100">
+                </td>
+            </tr>
+        </ng-container>
+    </table>
+</div>

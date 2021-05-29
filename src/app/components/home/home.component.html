@@ -1,0 +1,39 @@
+<ng-container>
+    <div class="home">
+        <div class="home-carousel">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/D0zYJ1RQ-fs" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="carousel-item">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/1roy4o4tqQM" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="carousel-item">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/bILE5BEyhdo" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="carousel-item">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/uBYORdr_TY8" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+        </div>
+        <div class="row home-pokemons">
+            <a [routerLink]="['/pokemons']" >See more >></a>
+            <div *ngFor="let pokemon of pokemonsList" class="col-xs-12 col-md-3">
+                <img atl="pokemon" [src]="pokemon.image" width="100%" height="200">
+                <div>
+                    <span>{{pokemon.name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
