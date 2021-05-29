@@ -3,3 +3,33 @@
     padding: 20px;
     margin: 0 auto;
 }
+
+.home-pokemons {
+    .pokemons-load-more a {
+        margin-left: auto;
+        padding: 20px 0;
+        display: block;
+        max-width: fit-content;
+        text-decoration: none;
+        color: #ad2323;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .pokemons-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    
+        .pokemon-item {
+            border-radius: 10px;
+            box-shadow: 0 1px 3px 0 rgb(27 27 27 / 20%), 0 4px 8px 0 rgb(27 27 27 / 10%);
+            margin-bottom: 20px;
+        }
+        
+        .pokemon-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+    }
+}

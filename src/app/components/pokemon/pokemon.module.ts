@@ -1,10 +1,21 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterModule, Routes } from "@angular/router";
 import { PaginatorModule } from "../paginator/paginator.module";
 import { PokemonDetailComponent } from "./pokemon-detail/pokemon-detail.component";
 import { PokemonListComponent } from "./pokemon-list/pokemon-list.component";
-import { PokemonRoutingModule } from "./pokemon.routing.module";
+
+const routes: Routes = [
+    {
+        path: '',
+        component: PokemonListComponent
+    },
+    {
+        path: 'detail/:id',
+        component: PokemonDetailComponent
+    }
+];
 
 @NgModule({
     declarations: [
@@ -12,8 +23,8 @@ import { PokemonRoutingModule } from "./pokemon.routing.module";
         PokemonDetailComponent
     ],
     imports: [
+        RouterModule.forChild(routes),
         CommonModule,
-        PokemonRoutingModule,
         ReactiveFormsModule,
         FormsModule,
         PaginatorModule

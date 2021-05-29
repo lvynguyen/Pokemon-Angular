@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { Generation } from 'src/app/models/generation';
 import { Version } from 'src/app/models/version';
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   versions: Version[];
 
   constructor(
+    private router: Router,
     private gameService: GameService,
     private genarationService: GenerationService
   ) { }

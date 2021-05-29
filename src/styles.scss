@@ -2,17 +2,13 @@
 
 @import url("../node_modules/bootstrap/dist/css/bootstrap.css");
 @import url("../node_modules/@fortawesome/fontawesome-free/css/all.min.css");
-html {
+html, body {
     height: 100%;
     outline: none;
 }
 
 body {
-    outline: none;
-    min-height: 100%;
     margin: 0;
-    margin-bottom: 100px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     font-size: 16px;
-    position: relative;
 }

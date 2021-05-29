@@ -1,7 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { HomeComponent } from "./home.component";
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+
 
 const routes: Routes = [
     {
@@ -16,6 +18,7 @@ const routes: Routes = [
     ],
     imports: [
         CommonModule,
+        CarouselModule.forRoot(),
         RouterModule.forChild(routes)
     ]
 })
