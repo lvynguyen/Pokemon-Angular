@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
 import { forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { PokemonService } from 'src/app/services/pokemon.service';
   ]
 })
 export class HomeComponent implements OnInit {
-  private readonly pokemonHomeLimit = 8;
+  private readonly pokemonHomeLimit = 10;
   pokemonsList: Pokemon[];
 
   constructor(
@@ -39,9 +39,4 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
-  slideRangeChange(event) {
-    console.log(event);
-  }
-
 }

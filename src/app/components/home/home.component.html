@@ -1,6 +1,6 @@
 <ng-container>
     <div class="home">
-        <carousel [noWrap]="false" [interval]="false" [isAnimated]="true" (slideRangeChange)="slideRangeChange($event)">
+        <carousel [noWrap]="false" [interval]="false" [isAnimated]="true">
             <slide>
                 <iframe width="100%" height="400" src="https://www.youtube.com/embed/D0zYJ1RQ-fs" frameborder="0"
                     allowfullscreen></iframe>
@@ -26,7 +26,7 @@
             </div>
             <div class="pokemons-list">
                 <div *ngFor="let pokemon of pokemonsList" class="pokemon-item">
-                    <img atl="pokemon" [src]="pokemon.image" width="200" height="200">
+                    <img alt="{{pokemon.name}}" [src]="pokemon.image" width="200" height="200">
                     <p class="pokemon-name">{{pokemon.name | titlecase}}</p>
                 </div>
             </div>

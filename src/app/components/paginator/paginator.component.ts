@@ -10,65 +10,13 @@ import {
   } from '@angular/core';
   
   import { PaginatorState } from '../../models/pagination';
-  
+
   @Component({
-    selector: 'paginator',
-    template: `
-      <div
-        class="h-8 w-8"
-        [ngStyle]="currentPage === 1 ? { 'opacity': '.5', 'pointer-events': 'none' }: { 'cursor': 'pointer' }"
-        style="display: inline-flex; margin: 0 2px"
-        (click)="changePageToFirst($event)"
-      >
-        <<
-      </div>
-      <div
-        class="h-8 w-8"
-        [ngStyle]="currentPage === 1 ? { 'opacity': '.5', 'pointer-events': 'none' }: { 'cursor': 'pointer' }"
-        style="display: inline-flex; margin: 0 2px"
-        (click)="changePageToPrev($event)"
-      >
-        <
-      </div>
-      <div
-        *ngFor="let pageLink of pageLinks"
-        (click)="onPageLinkClick($event, pageLink)"
-        [ngStyle]="pageLink === currentPage ? { 'border-bottom': '1px solid gray' }: { 'border': 'none' }"
-        style="cursor:pointer; display: inline-flex; margin: 0 5px"
-        class="w-8 leading-5"
-      >
-        {{ pageLink }}
-      </div>
-      <div
-        class="h-8 w-8 ml-1"
-        [ngStyle]="currentPage === lastPage ? { 'opacity': '.5', 'pointer-events': 'none' }: { 'cursor': 'pointer' }"
-        style="display: inline-flex; margin: 0 2px"
-        (click)="changePageToNext($event)"
-      >
-        >
-      </div>
-      <div
-        class="h-8 w-8 ml-1"
-        [ngStyle]="currentPage === lastPage ? { 'opacity': '.5', 'pointer-events': 'none' }: { 'cursor': 'pointer' }"
-        style="display: inline-flex; margin: 0 2px"
-        (click)="changePageToLast($event)"
-      >
-        >>
-      </div>
-      <div *ngIf="rowsPerPageOptions.length">
-        <select
-          class="rounded border border-gray-600"
-          [(ngModel)]="rows"
-          (ngModelChange)="onRppChange()"
-        >
-          <option *ngFor="let rpp of rowsPerPageOptions" [value]="rpp">
-            {{ rpp }}
-          </option>
-        </select>
-      </div>
-    `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-paginator',
+    templateUrl: './paginator.component.html',
+    styleUrls: ['./paginator.component.scss']
   })
+  
   export class PaginatorComponent implements OnInit, OnChanges {
     @Input() currentPage = 1;
   
