@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { PaginatorModule } from "../paginator/paginator.module";
+import { PaginatorModule } from "../../components/paginator/paginator.module";
 import { PokemonDetailComponent } from "./pokemon-detail/pokemon-detail.component";
 import { PokemonListComponent } from "./pokemon-list/pokemon-list.component";
 

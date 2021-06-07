@@ -1,6 +1,6 @@
 <ng-container>
     <div class="home">
-        <carousel [noWrap]="false" [interval]="false" [isAnimated]="true">
+        <!-- <carousel [noWrap]="false" [interval]="false" [isAnimated]="true">
             <slide>
                 <iframe width="100%" height="400" src="https://www.youtube.com/embed/D0zYJ1RQ-fs" frameborder="0"
                     allowfullscreen></iframe>
@@ -17,7 +17,7 @@
                 <iframe width="100%" height="400" src="https://www.youtube.com/embed/uBYORdr_TY8" frameborder="0"
                     allowfullscreen></iframe>
             </slide>
-        </carousel>
+        </carousel> -->
         <div class="home-pokemons">
             <div class="pokemons-load-more">
                 <a [routerLink]="['/pokemons']">See more
@@ -25,7 +25,7 @@
                 </a>
             </div>
             <div class="pokemons-list">
-                <div *ngFor="let pokemon of pokemonsList" class="pokemon-item">
+                <div *ngFor="let pokemon of pokemonsList$ | async" class="pokemon-item">
                     <img alt="{{pokemon.name}}" [src]="pokemon.image" width="200" height="200">
                     <p class="pokemon-name">{{pokemon.name | titlecase}}</p>
                 </div>

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { forkJoin, Subscription } from 'rxjs';
 import { auditTime, map, switchMap } from 'rxjs/operators';
-import { PaginatorState } from 'src/app/models/pagination';
-import { PaginatedPokemon, Pokemon } from 'src/app/models/pokemon';
-import { PokemonService } from 'src/app/services/pokemon.service';
+import { PaginatorState } from 'src/app/core/models/pagination';
+import { PaginatedPokemon, Pokemon } from 'src/app/core/models/pokemon';
+import { PokemonService } from 'src/app/core/services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-list',

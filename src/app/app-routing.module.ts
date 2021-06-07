@@ -9,11 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule)
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
   },
   {
     path: 'pokemons',
-    loadChildren: () => import('./components/pokemon/pokemon.module').then(m => m.PokemonModule)
+    loadChildren: () => import('./pages/pokemon/pokemon.module').then(m => m.PokemonModule)
   },
   {
     path: '**',

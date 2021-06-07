@@ -9,7 +9,7 @@ import {
     SimpleChanges
   } from '@angular/core';
   
-  import { PaginatorState } from '../../models/pagination';
+  import { PaginatorState } from '../../core/models/pagination';
 
   @Component({
     selector: 'app-paginator',
