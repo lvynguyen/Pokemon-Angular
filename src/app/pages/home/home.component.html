@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngIf="pokemonsList$ | async as pokemonsList">
     <div class="home">
         <!-- <carousel [noWrap]="false" [interval]="false" [isAnimated]="true">
             <slide>
@@ -19,17 +19,22 @@
             </slide>
         </carousel> -->
         <div class="home-pokemons">
-            <div class="pokemons-load-more">
-                <a [routerLink]="['/pokemons']">See more
-                    <i class="fas fa-angle-double-right"></i>
-                </a>
-            </div>
-            <div class="pokemons-list">
-                <div *ngFor="let pokemon of pokemonsList$ | async" class="pokemon-item">
-                    <img alt="{{pokemon.name}}" [src]="pokemon.image" width="200" height="200">
-                    <p class="pokemon-name">{{pokemon.name | titlecase}}</p>
-                </div>
-            </div>
+            <span *ngIf="isLoading$ | async; else loaded">Loading</span>
+            <ng-template #loaded>
+                <ng-container *ngIf="pokemonsList.length">
+                    <div class="pokemons-load-more">
+                        <a [routerLink]="['/pokemons']">See more
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </div>
+                    <div class="pokemons-list">
+                        <div *ngFor="let pokemon of pokemonsList" class="pokemon-item">
+                            <img alt="{{pokemon.name}}" [src]="pokemon.image" width="200" height="200">
+                            <p class="pokemon-name">{{pokemon.name | titlecase}}</p>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-template>
         </div>
     </div>
 </ng-container>

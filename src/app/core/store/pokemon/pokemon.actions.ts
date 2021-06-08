@@ -10,7 +10,7 @@ export enum PokemonActionsType {
     GET_DETAIL_FAILURE = '@Pokemon/GetDetailFailure'
 };
 
-export const getPokemons = createAction(PokemonActionsType.GET_ALL_REQUEST);
+export const getPokemons = createAction(PokemonActionsType.GET_ALL_REQUEST, props<{limit: number}>());
 export const getPokemonsSuccess = createAction(PokemonActionsType.GET_ALL_SUCCESS, props<{items : any}>());
 export const getPokemonsFailure = createAction(PokemonActionsType.GET_ALL_FAILURE, props<{error? : string}>());
 export const getPokemonDetail = createAction(PokemonActionsType.GET_DETAIL_REQUEST, props<{id: number}>());

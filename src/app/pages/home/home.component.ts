@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Pokemon } from 'src/app/core/models/pokemon';
 import { AppState } from 'src/app/core/store/app.state';
 import { getPokemons } from 'src/app/core/store/pokemon/pokemon.actions';
-import { pokemonsSelector } from 'src/app/core/store/pokemon/pokemon.selector';
+import { isLoadingSelector, pokemonsSelector } from 'src/app/core/store/pokemon/pokemon.selector';
 import { PokemonState } from 'src/app/core/store/pokemon/pokemon.state';
 
 @Component({
@@ -19,6 +19,7 @@ import { PokemonState } from 'src/app/core/store/pokemon/pokemon.state';
 export class HomeComponent implements OnInit {
   private readonly pokemonHomeLimit = 10;
   pokemonsList$: Observable<any>;
+  isLoading$: Observable<any>;
 
   constructor(
     private store: Store<PokemonState>
@@ -26,11 +27,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     //dispatch action
-    this.store.dispatch(getPokemons());
+    this.store.dispatch(getPokemons({limit: this.pokemonHomeLimit}));
 
-    this.pokemonsList$ = this.store.select(
-      pokemonsSelector
-    )
+    this.pokemonsList$ = this.store.select(pokemonsSelector);
+
+    this.isLoading$ = this.store.select(isLoadingSelector);
   }
 
   // loadPokemons() {

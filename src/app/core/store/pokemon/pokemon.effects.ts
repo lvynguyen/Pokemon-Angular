@@ -10,7 +10,8 @@ import * as PokemonActions from "./pokemon.actions";
 export class PokemonEffects {
     pokemons$ = createEffect(() => this.actions$.pipe(
         ofType(PokemonActions.getPokemons),
-        switchMap(() => this.pokemonService.getPokemons()),
+        tap((action: any) => action),
+        switchMap(action => this.pokemonService.getPokemons(action.limit, 0)),
         switchMap(paginatedPokemons => 
              forkJoin(paginatedPokemons.results.map(paginatedPokemon => this.pokemonService.getPokemonDetail(paginatedPokemon.id)))
                 .pipe(map(pokemonDetails => {
