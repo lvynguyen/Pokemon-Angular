@@ -1,22 +1,39 @@
+import { createEntityAdapter, EntityAdapter } from "@ngrx/entity";
+import { createFeatureSelector } from "@ngrx/store";
+import { Pokemon } from "../../models/pokemon";
 import * as PokemonActions from "./pokemon.actions"
 import { PokemonState } from "./pokemon.state"
 
-const innitialState: PokemonState = {
-    items : [],
-    currentItem : null,
-    isLoading : false,
-    error : '',
-    sort : null
+export const adapter: EntityAdapter<Pokemon> = createEntityAdapter<Pokemon>({
+    selectId: selectPokemonId,
+    sortComparer: sortByName,
+});
+
+export function selectPokemonId(a: Pokemon): string {
+    //In this case this would be optional since primary key is id
+    return a.id;
 }
+
+export function sortByName(a: Pokemon, b: Pokemon): number {
+    return a.name.localeCompare(b.name);
+}
+
+const innitialState = adapter.getInitialState({
+    currentItem: null,
+    isLoading: false,
+    error: '',
+    sort: null,
+    selectedPokemonId: null
+})
 
 export const pokemonFeatureKey = 'feature_pokemon';
 
-export function pokemonReducer(state: PokemonState = innitialState, action: PokemonActions.PokemonActions) {
+export function pokemonReducer(state = innitialState, action: PokemonActions.PokemonActions) {
     switch (action.type) {
         case PokemonActions.PokemonActionsType.GET_ALL_REQUEST:
             return { ...state, isLoading: true };
         case PokemonActions.PokemonActionsType.GET_ALL_SUCCESS:
-            return { ...state, isLoading: false, items: action.items };
+            return adapter.setAll(action.entities,{...state, isLoading: false});
         case PokemonActions.PokemonActionsType.GET_ALL_FAILURE:
             return { ...state, isLoading: false, error: action.error };
         case PokemonActions.PokemonActionsType.GET_DETAIL_REQUEST:
@@ -26,6 +43,15 @@ export function pokemonReducer(state: PokemonState = innitialState, action: Poke
         case PokemonActions.PokemonActionsType.GET_DETAIL_FAILURE:
             return { ...state, isLoading: false, error: action.error };
         default:
-            return {...state};
+            return { ...state };
     }
 }
+
+export const {
+    selectAll,
+    selectEntities,
+    selectIds,
+    selectTotal
+} = adapter.getSelectors();
+
+export const selectAllPokemons = selectAll;

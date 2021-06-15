@@ -1,13 +1,14 @@
+import { state } from "@angular/animations";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { pokemonFeatureKey } from "./pokemon.reducer";
+import * as pokemonsReducer from "./pokemon.reducer";
 import { PokemonState } from "./pokemon.state";
 
-const getPokemonState = createFeatureSelector<PokemonState>(pokemonFeatureKey);
+export const getPokemonState = createFeatureSelector<PokemonState>(pokemonsReducer.pokemonFeatureKey);
 
 export const pokemonsSelector = createSelector(
     getPokemonState,
-    state => state.items
-)
+    pokemonsReducer.selectAll
+);
 
 export const isLoadingSelector = createSelector(
     getPokemonState,

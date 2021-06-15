@@ -1,20 +1,30 @@
 <div class="pokemons-pagination">
-    <app-paginator
-      [currentPage]="paginatorState.page"
-      [rowsPerPageOptions]="pageSizes"
-      [rows]="paginatorState.rows"
-      [totalRecords]="paginatedPokemons?.count"
-      (onPageChange)="onPageChanged($event)"
-    ></app-paginator>
+    <app-paginator [currentPage]="paginatorState.page" [rowsPerPageOptions]="pageSizes" [rows]="paginatorState.rows"
+        [totalRecords]="paginatedPokemons?.count" (onPageChange)="onPageChanged($event)"></app-paginator>
 
     <div class="pokemons-search">
         <input class="form-control" type="text" placeholder="Search pokemon by name" [formControl]="query">
     </div>
-    
-    <div class="pokemons-list">
+
+    <ng-container *ngIf="pokemonsList$ | async as pokemonsList">
+        <span *ngIf="isLoading$ | async; else loaded">Loading</span>
+        <ng-template #loaded>
+            <ng-container *ngIf="pokemonsList.length">
+                <div class="pokemons-list">
+                    <div *ngFor="let pokemon of pokemonsList" class="pokemon-item">
+                        <img alt="{{pokemon.name}}" [src]="pokemon.image" width="200" height="200">
+                        <p class="pokemon-name">{{pokemon.name | titlecase}}</p>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </ng-container>
+
+
+    <!-- <div class="pokemons-list">
         <div *ngFor="let pokemon of displayPokemons" class="pokemon-item">
             <img alt="{{pokemon.image}}" [src]="pokemon.image" width="200" height="200">
             <p class="pokemon-name">{{pokemon.name | titlecase}}</p>
         </div>
-    </div>
+    </div> -->
 </div>

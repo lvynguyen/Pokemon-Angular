@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { forkJoin, Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { auditTime, map, switchMap } from 'rxjs/operators';
 import { PaginatorState } from 'src/app/core/models/pagination';
 import { PaginatedPokemon, Pokemon } from 'src/app/core/models/pokemon';
 import { PokemonService } from 'src/app/core/services/pokemon.service';
+import { getPokemons } from 'src/app/core/store/pokemon/pokemon.actions';
+import { isLoadingSelector, pokemonsSelector } from 'src/app/core/store/pokemon/pokemon.selector';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -22,24 +25,36 @@ export class PokemonListComponent implements OnInit, OnDestroy {
   } as PaginatorState;
   query = new FormControl('');
   paginatedPokemons: PaginatedPokemon;
-  displayPokemons: Pokemon[] = [];
+  pokemons$: Pokemon[] = [];
   query$: Subscription;
+  pokemonsList$: Observable<any>;
+  isLoading$: Observable<any>;
 
   constructor(
-    private pokemonService: PokemonService
+    private pokemonService: PokemonService,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.query$ = this.query.valueChanges.pipe(
-      auditTime(500),
-      map(searchTerm => searchTerm.toLowerCase()),
-    ).subscribe(lowerCaseSearchTerm => {
-      const searchResults = this.paginatedPokemons.results.filter(pokemon => 
-        pokemon.name.toLowerCase().includes(lowerCaseSearchTerm)
-      );
-      this.displayPokemons = searchResults;
-    });
-    this.loadPokemons();
+    // this.query$ = this.query.valueChanges.pipe(
+    //   auditTime(500),
+    //   map(searchTerm => searchTerm.toLowerCase()),
+    // ).subscribe(lowerCaseSearchTerm => {
+    //   const searchResults = this.paginatedPokemons.results.filter(pokemon => 
+    //     pokemon.name.toLowerCase().includes(lowerCaseSearchTerm)
+    //   );
+    //   this.pokemons$ = searchResults;
+    // });
+
+    const { rows: limit, page } = this.paginatorState;
+    this.store.dispatch(getPokemons({limit, page}));
+
+    this.pokemonsList$ = this.store.select(pokemonsSelector);
+
+    this.isLoading$ = this.store.select(isLoadingSelector);
+
+
+    // this.loadPokemons();
   }
 
   ngOnDestroy() {
@@ -55,8 +70,8 @@ export class PokemonListComponent implements OnInit, OnDestroy {
 
   loadPokemons() {
     const { rows: limit, page } = this.paginatorState;
-    this.query.setValue('', {emitEvent: false});
-    this.displayPokemons = [];
+    this.query.setValue('', { emitEvent: false });
+    // this.displayPokemons = [];
     this.pokemonService.getPokemons(limit, page).pipe(switchMap((res: PaginatedPokemon) => {
       this.paginatedPokemons = res;
       return forkJoin(res.results.map((pokemon: Pokemon) => this.pokemonService.getPokemonDetail(pokemon.id)));
@@ -68,7 +83,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
           ...pokemon
         }
       });
-      this.displayPokemons = this.paginatedPokemons.results;
+      // this.displayPokemons = this.paginatedPokemons.results;
     });
   }
 

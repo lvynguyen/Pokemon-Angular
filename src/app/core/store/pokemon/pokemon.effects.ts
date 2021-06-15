@@ -24,7 +24,7 @@ export class PokemonEffects {
                     });
                 }))
         ),
-        map(items => PokemonActions.getPokemonsSuccess({ items })),
+        map(entities => PokemonActions.getPokemonsSuccess({ entities })),
         catchError(error => of(PokemonActions.getPokemonsFailure({ error })))
     )
     );
