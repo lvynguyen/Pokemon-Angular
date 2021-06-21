@@ -5,6 +5,6 @@ export interface PokemonState extends EntityState<Pokemon> {
     currentItem: Pokemon;
     isLoading: boolean;
     error?: string;
-    sort: 'asc' | 'desc' | null;
     selectedUserId: number | null;
+    paginationInfo: PaginatedPokemon;
 }

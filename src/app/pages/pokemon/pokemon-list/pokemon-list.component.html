@@ -1,25 +1,28 @@
 <div class="pokemons-pagination">
-    <app-paginator [currentPage]="paginatorState.page" [rowsPerPageOptions]="pageSizes" [rows]="paginatorState.rows"
-        [totalRecords]="paginatedPokemons?.count" (onPageChange)="onPageChanged($event)"></app-paginator>
+    <ng-container *ngIf="isLoading$ | async; else loaded">
+        <p>Loading</p>
+    </ng-container>
+    <ng-template #loaded>
+        <ng-container *ngIf="pokemonsList$ | async as pokemonsList">
+            <ng-container *ngIf="paginatedPokemons$ | async as paginatedPokemons">
+                <app-paginator [currentPage]="paginatorState.page" [rowsPerPageOptions]="pageSizes"
+                    [rows]="paginatorState.rows" [totalRecords]="paginatedPokemons?.count"
+                    (onPageChange)="onPageChanged($event)"></app-paginator>
+            </ng-container>
 
-    <div class="pokemons-search">
-        <input class="form-control" type="text" placeholder="Search pokemon by name" [formControl]="query">
-    </div>
-
-    <ng-container *ngIf="pokemonsList$ | async as pokemonsList">
-        <span *ngIf="isLoading$ | async; else loaded">Loading</span>
-        <ng-template #loaded>
+            <div class="pokemons-search">
+                <input class="form-control" type="text" placeholder="Search pokemon by name" [formControl]="query">
+            </div>
             <ng-container *ngIf="pokemonsList.length">
                 <div class="pokemons-list">
                     <div *ngFor="let pokemon of pokemonsList" class="pokemon-item">
                         <img alt="{{pokemon.name}}" [src]="pokemon.image" width="200" height="200">
-                        <p class="pokemon-name">{{pokemon.name | titlecase}}</p>
+                        <p class="pokemon-name">{{pokemon.name | titlecase}} <strong>{{pokemon.id}}</strong></p>
                     </div>
                 </div>
             </ng-container>
-        </ng-template>
-    </ng-container>
-
+        </ng-container>
+    </ng-template>
 
     <!-- <div class="pokemons-list">
         <div *ngFor="let pokemon of displayPokemons" class="pokemon-item">

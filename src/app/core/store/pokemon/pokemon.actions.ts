@@ -8,7 +8,7 @@ export enum PokemonActionsType {
     GET_DETAIL_REQUEST = '@Pokemon/GetDetail',
     GET_DETAIL_SUCCESS = '@Pokemon/GetDetailSuccess',
     GET_DETAIL_FAILURE = '@Pokemon/GetDetailFailure',
-    SORT_BY_NAME = '@Pokemon/SortByName'
+    GET_PAGINATION_INFO = "@Pokemon/GetPaginationInfo"
 };
 
 export const getPokemons = createAction(PokemonActionsType.GET_ALL_REQUEST, props<{ limit: number, page?: number }>());
@@ -17,6 +17,7 @@ export const getPokemonsFailure = createAction(PokemonActionsType.GET_ALL_FAILUR
 export const getPokemonDetail = createAction(PokemonActionsType.GET_DETAIL_REQUEST, props<{ id: number }>());
 export const getPokemonDetailSuccess = createAction(PokemonActionsType.GET_DETAIL_SUCCESS, props<{ item: Pokemon }>());
 export const getPokemonDetailFailure = createAction(PokemonActionsType.GET_DETAIL_FAILURE, props<{ error?: string }>());
+export const getPaginationInfo = createAction(PokemonActionsType.GET_PAGINATION_INFO, props<{ paginationInfo: PaginatedPokemon}>());
 
 // export class getPokemonsAction implements Action {
 //   readonly type = PokemonActionsType.GET_ALL_REQUEST;
@@ -30,3 +31,4 @@ export type PokemonActions =
     | ActionType<typeof getPokemonDetail>
     | ActionType<typeof getPokemonDetailSuccess>
     | ActionType<typeof getPokemonDetailFailure>
+    | ActionType<typeof getPaginationInfo>

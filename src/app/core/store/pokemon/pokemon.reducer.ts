@@ -22,8 +22,8 @@ const innitialState = adapter.getInitialState({
     currentItem: null,
     isLoading: false,
     error: '',
-    sort: null,
-    selectedPokemonId: null
+    selectedPokemonId: null,
+    paginationInfo: null
 })
 
 export const pokemonFeatureKey = 'feature_pokemon';
@@ -33,7 +33,7 @@ export function pokemonReducer(state = innitialState, action: PokemonActions.Pok
         case PokemonActions.PokemonActionsType.GET_ALL_REQUEST:
             return { ...state, isLoading: true };
         case PokemonActions.PokemonActionsType.GET_ALL_SUCCESS:
-            return adapter.setAll(action.entities,{...state, isLoading: false});
+            return adapter.setAll(action.entities, { ...state, isLoading: false });
         case PokemonActions.PokemonActionsType.GET_ALL_FAILURE:
             return { ...state, isLoading: false, error: action.error };
         case PokemonActions.PokemonActionsType.GET_DETAIL_REQUEST:
@@ -42,6 +42,8 @@ export function pokemonReducer(state = innitialState, action: PokemonActions.Pok
             return { ...state, isLoading: false, currentItem: action.item };
         case PokemonActions.PokemonActionsType.GET_DETAIL_FAILURE:
             return { ...state, isLoading: false, error: action.error };
+        case PokemonActions.PokemonActionsType.GET_PAGINATION_INFO:
+            return { ...state, isLoading: true, paginationInfo: action.paginationInfo }
         default:
             return { ...state };
     }

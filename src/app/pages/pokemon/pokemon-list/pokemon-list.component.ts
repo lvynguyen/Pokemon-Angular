@@ -7,7 +7,7 @@ import { PaginatorState } from 'src/app/core/models/pagination';
 import { PaginatedPokemon, Pokemon } from 'src/app/core/models/pokemon';
 import { PokemonService } from 'src/app/core/services/pokemon.service';
 import { getPokemons } from 'src/app/core/store/pokemon/pokemon.actions';
-import { isLoadingSelector, pokemonsSelector } from 'src/app/core/store/pokemon/pokemon.selector';
+import { isLoadingSelector, paginationInfoSelector, pokemonsSelector } from 'src/app/core/store/pokemon/pokemon.selector';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -24,7 +24,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     rows: 20,
   } as PaginatorState;
   query = new FormControl('');
-  paginatedPokemons: PaginatedPokemon;
+  paginatedPokemons$: Observable<PaginatedPokemon>;
   pokemons$: Pokemon[] = [];
   query$: Subscription;
   pokemonsList$: Observable<any>;
@@ -46,15 +46,13 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     //   this.pokemons$ = searchResults;
     // });
 
-    const { rows: limit, page } = this.paginatorState;
-    this.store.dispatch(getPokemons({limit, page}));
-
     this.pokemonsList$ = this.store.select(pokemonsSelector);
 
     this.isLoading$ = this.store.select(isLoadingSelector);
 
+    this.loadPokemons();
 
-    // this.loadPokemons();
+    this.paginatedPokemons$ = this.store.select(paginationInfoSelector)
   }
 
   ngOnDestroy() {
@@ -71,20 +69,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
   loadPokemons() {
     const { rows: limit, page } = this.paginatorState;
     this.query.setValue('', { emitEvent: false });
-    // this.displayPokemons = [];
-    this.pokemonService.getPokemons(limit, page).pipe(switchMap((res: PaginatedPokemon) => {
-      this.paginatedPokemons = res;
-      return forkJoin(res.results.map((pokemon: Pokemon) => this.pokemonService.getPokemonDetail(pokemon.id)));
-    })).subscribe((listPokemonsDetails) => {
-      this.paginatedPokemons.results = this.paginatedPokemons.results.map((pokemon: Pokemon, index) => {
-        let additionalDetails = listPokemonsDetails[index];
-        return {
-          ...additionalDetails,
-          ...pokemon
-        }
-      });
-      // this.displayPokemons = this.paginatedPokemons.results;
-    });
+    this.store.dispatch(getPokemons({limit, page}));
   }
 
 }

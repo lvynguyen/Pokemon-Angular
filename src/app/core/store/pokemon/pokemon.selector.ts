@@ -15,3 +15,8 @@ export const isLoadingSelector = createSelector(
     state => state.isLoading
 );
 
+export const paginationInfoSelector = createSelector(
+    getPokemonState,
+    state => state.paginationInfo
+)
+
